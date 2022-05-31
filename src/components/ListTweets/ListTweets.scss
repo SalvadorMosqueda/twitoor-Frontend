@@ -1,0 +1,65 @@
+@import '../../scss/index.scss';
+.list-tweets {
+    .input {
+        margin-bottom: 0.4em;
+        border-radius: 40px;
+        margin-left: 1em;
+        padding: 4px;
+        width: 37em;
+        border: none;
+        outline: none;
+    }
+    .iconSend {
+        margin-bottom: 5px;
+        margin-left: 5px;
+        // color: aqua;
+        color: green;
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+    .ContainerComentarios {
+        width: 39.5em;
+        border: solid 0.5px;
+        border-radius: 20px;
+        margin-left: 0.8em;
+        padding: 1em 2em;
+        margin-bottom: 1em;
+    }
+    .tweetCotainer {
+        border-bottom: 1px solid $border-grey;
+    }
+    .optionsCointainer {
+        p {
+            margin-bottom: 7px;
+            &:hover {
+                transform: scale(1.1);
+                color: green;
+            }
+        }
+        display: flex;
+        gap: 6em;
+        margin-left: 1.5em;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    .tweet {
+        display: flex;
+        padding: 10px 20px;
+        .avatar {
+            width: 55px;
+            height: 50px;
+            margin-right: 20px;
+        }
+        .name {
+            font-weight: bold;
+            span {
+                margin-left: 10px;
+                font-size: 12px;
+                font-weight: normal;
+                color: $font-grey;
+            }
+        }
+    }
+}
