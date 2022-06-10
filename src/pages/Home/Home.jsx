@@ -3,12 +3,14 @@ import { Button, Spinner } from 'react-bootstrap';
 import BasicLayout from "../../layout/BasicLayout";
 import ListTweets from "../../components/ListTweets";
 import { getTweetsFollowersApi } from '../../api/tweet';
+import { GetLikes } from '../../api/likes';
 
 import "./Home.scss";
 
 export default function Home(props) {
   const { setRefreshCheckLogin } = props;
   const [tweets, setTweets] = useState(null);
+  const [likes, setLikes] = useState(null);
   const [page, setPage] = useState(1);
   const [loadingTweets, setLoadingTweets] = useState(false)
 
@@ -22,6 +24,7 @@ export default function Home(props) {
         } else {
           setTweets([...tweets, ...formatModel(response)]);
           setLoadingTweets(false);
+          console.log(tweets)
         }
       }
     }).catch(() => {})

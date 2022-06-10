@@ -6,17 +6,24 @@ import { API_HOST } from '../../utils/constants'
 import { getUserApi } from '../../api/user'
 import { replaceURLWithHTMLLinks } from '../../utils/functions'
 import Send from '../../assets/Icons/send'
-import { createCommentTweetApi } from '../../api/coments'
+import { createCommentTweetApi,GetComments } from '../../api/coments'
 import './ListTweets.scss'
 import Swal from 'sweetalert2'
+import Comments from './Comments'
+import Spinner from './Spinner'
 
 function Tweet(props) {
-    const { tweet,id} = props;
-    console.log(id)
+    const { tweet} = props;
     const [userInfo, setUserInfo] = useState(null)
     const [avatarURL, setAvatarURL] = useState(null)
     const [comentarioV, setComentarioV]=useState(false)
     const [comentario,setComentario] = useState('')
+    const [cargando,setCargando]=useState(false)
+    const [comentarios,setComentarios]=useState(null)
+
+    
+
+    //use efect para sacar la informacion del usuario del tweet
     useEffect(() => {
         getUserApi(tweet.userId).then(response => {
             setUserInfo(response)
@@ -28,6 +35,11 @@ function Tweet(props) {
         })
     }, [tweet]);
     
+    //useefect para los comentarios de los tweet
+    useEffect(()=>{
+      
+    },[tweet])
+
     const CrearComentario = async ()=>{
         if(comentario===''){
             return
@@ -50,17 +62,29 @@ function Tweet(props) {
                     icon: 'success',
                     title: 'Comentario Creado exitosamente!'
                   })
-                setComentario("");
-               setTimeout(() => {
-                   window.location.reload()
-               }, 2000);
+                
+               
             }
+            setComentario("");
         })
         .catch(err => {
             console.log(err);
         })
     }
-   
+   const handleCommments = () =>{
+    setComentarioV(!comentarioV)
+        setCargando(true)
+            GetComments(tweet._id).then(response=>{
+                setComentarios(response)
+                console.log(response)
+
+
+            })
+            setTimeout(() => {
+                setCargando(false)
+            }, 500);
+    
+   }
 
     return (
     <div onClick={()=>console.log(tweet._id)} className='tweetCotainer'>
@@ -77,18 +101,23 @@ function Tweet(props) {
         <div className='optionsCointainer'>
                 <p>Me gusta</p>
         
-        <p onClick={()=>setComentarioV(!comentarioV)} htmlFor='comentario'>Comentar</p>
+        <p onClick={handleCommments} htmlFor='comentario'>Comentar</p>
         </div>
-        {comentarioV ? <div> <input onChange={(e)=>setComentario(e.target.value)} name={comentario} id='comentario' placeholder='Agrega un comentario...' className='input' type="text" />
+        {comentarioV ? <div> <input value={comentario} onChange={(e)=>setComentario(e.target.value)} name={comentario} id='comentario' placeholder='Agrega un comentario...' className='input' type="text" />
         <Send onClick={CrearComentario} className='iconSend'/></div>:''}
        
-        {comentarioV ?
+        {comentarioV?
         <div className='ContainerComentarios'>
-        <p>hola </p>
-        <p>hola </p>
-        <p>hola </p>
-        <p>hola </p>
-        <p>hola </p>
+        
+        {cargando? <Spinner/>: comentarios? comentarios.map(comentario=>(
+            <Comments
+            key={comentario._id}
+            comentario={comentario}
+            />
+        ))
+        
+        :"No hay Comentarios"}
+        
     
     </div>
     :''

@@ -1,9 +1,9 @@
 import { API_HOST } from "../utils/constants";
 import { getTokenApi } from "./auth";
 
-export  const GetComments = (IDTweet)=>{
+export  const GetLikes= (IDTweet)=>{
     //url
-    const url = `${API_HOST}/leerComentarios/${IDTweet}`;
+    const url = `${API_HOST}/leerLike/${IDTweet}`;
 
     //las configuraciones
     const params = {
@@ -22,23 +22,20 @@ export  const GetComments = (IDTweet)=>{
     })
 }
 
-export function createCommentTweetApi(message,IDTweet){
-    const url = `${API_HOST}/crearComentario/${IDTweet}`;
+export function DarLike(IDTweet){
+    const url = `${API_HOST}/darLike/${IDTweet}`;
     
-    const data = {
-        mensaje: message
-    }
+  
     const params = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${getTokenApi()}`
         },
-        body: JSON.stringify(data)
     }
     return fetch(url, params).then(response => {
         if(response.status >= 200 && response.status < 300){
-            return { code: response.status, message: 'Comentario creado' };
+            return { code: response.status, message: 'Te gusto la publicacion'};
         }
         return { code: 500, message: 'Error del servidor' };
     })
