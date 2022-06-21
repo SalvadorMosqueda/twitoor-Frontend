@@ -2,18 +2,18 @@
 .list-tweets {
     .flex {
         display: flex;
-        justify-content: space-between!important;
         align-items: center;
     }
     .comentario {
+        position: relative;
         background-color: rgb(87, 87, 87);
         margin-bottom: 8px;
         padding: 6px;
         border-radius: 30px;
         .IconConfig {
-            display: flex;
-            gap: 5px;
-            align-items: center;
+            position: absolute;
+            top: -.0em;
+            left: 34.7em;
         }
         .comentarios {
             margin-left: 2.8em;
@@ -29,8 +29,8 @@
         .name {
             font-weight: bold;
             font-size: 0.9em;
-            margin-top: -4px;
-            margin-left: -20em;
+            margin-top: -8px;
+          
             span {
                 margin-left: 10px;
                 font-size: 12px;
@@ -129,6 +129,16 @@
         width: 37em;
         border: none;
         outline: none;
+    }
+    .inputE {
+        margin-top: 0.4em;
+        border-radius: 40px;
+        margin-left: 1em;
+        padding: 4px;
+        width: 32em;
+        border: none;
+        outline: none;
+        
     }
     .iconSend {
         margin-bottom: 5px;

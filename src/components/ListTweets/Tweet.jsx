@@ -22,7 +22,7 @@ function Tweet(props) {
     const [comentarios,setComentarios]=useState(null)
 
     
-
+ 
     //use efect para sacar la informacion del usuario del tweet
     useEffect(() => {
         getUserApi(tweet.userId).then(response => {
@@ -63,6 +63,13 @@ function Tweet(props) {
                     title: 'Comentario Creado exitosamente!'
                   })
                 
+                    setComentarioV(false)
+                    setTimeout(() => {
+                      setComentarioV(true)
+                      
+                    }, 100);
+                
+                  
                
             }
             setComentario("");
@@ -72,11 +79,10 @@ function Tweet(props) {
         })
     }
    const handleCommments = () =>{
-    setComentarioV(!comentarioV)
         setCargando(true)
             GetComments(tweet._id).then(response=>{
                 setComentarios(response)
-                console.log(response)
+                
 
 
             })
@@ -85,6 +91,9 @@ function Tweet(props) {
             }, 500);
     
    }
+   useEffect(() => {
+     handleCommments()
+   }, [comentarioV])
 
     return (
     <div onClick={()=>console.log(tweet._id)} className='tweetCotainer'>
@@ -101,7 +110,7 @@ function Tweet(props) {
         <div className='optionsCointainer'>
                 <p>Me gusta</p>
         
-        <p onClick={handleCommments} htmlFor='comentario'>Comentar</p>
+        <p onClick={()=>setComentarioV(!comentarioV)} htmlFor='comentario'>Comentar</p>
         </div>
         {comentarioV ? <div> <input value={comentario} onChange={(e)=>setComentario(e.target.value)} name={comentario} id='comentario' placeholder='Agrega un comentario...' className='input' type="text" />
         <Send onClick={CrearComentario} className='iconSend'/></div>:''}
@@ -111,6 +120,8 @@ function Tweet(props) {
         
         {cargando? <Spinner/>: comentarios? comentarios.map(comentario=>(
             <Comments
+            setComentarioV={setComentarioV}
+            user={tweet.userId}
             key={comentario._id}
             comentario={comentario}
             />

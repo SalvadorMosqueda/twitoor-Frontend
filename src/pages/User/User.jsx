@@ -19,6 +19,7 @@ function User(props) {
   const [page, setPage] = useState(1);
   const [loadingTweets, setLoadingTweets] = useState(false)
   const { params } = router;
+  
   const currentUser = useAuth();
 
   useEffect(() => {

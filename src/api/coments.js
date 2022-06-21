@@ -21,8 +21,29 @@ export  const GetComments = (IDTweet)=>{
         return err;
     })
 }
+export const DeleteComment =IDTweet=>{
+    const url = `${API_HOST}/eliminarComentario/${IDTweet}`;
 
-export function createCommentTweetApi(message,IDTweet){
+        //las configuraciones
+        const params = {
+            method :'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${getTokenApi()}`
+            }
+        }
+        //iniciamos peticion
+        return fetch(url, params)
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => {
+            return err;
+        })
+    
+
+}
+export const createCommentTweetApi = (message,IDTweet)=>{
     const url = `${API_HOST}/crearComentario/${IDTweet}`;
     
     const data = {
@@ -39,6 +60,33 @@ export function createCommentTweetApi(message,IDTweet){
     return fetch(url, params).then(response => {
         if(response.status >= 200 && response.status < 300){
             return { code: response.status, message: 'Comentario creado' };
+        }
+        return { code: 500, message: 'Error del servidor' };
+    })
+    .catch(err => {
+        return err;
+    })
+
+
+
+}
+export const EditCommentTweetApi=(message,IDComment)=>{
+    const url = `${API_HOST}/editarComentario/${IDComment}`;
+    
+    const data = {
+        mensaje: message
+    }
+    const params = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${getTokenApi()}`
+        },
+        body: JSON.stringify(data)
+    }
+    return fetch(url, params).then(response => {
+        if(response.status >= 200 && response.status < 300){
+            return { code: response.status, message: 'Comentario editado' };
         }
         return { code: 500, message: 'Error del servidor' };
     })

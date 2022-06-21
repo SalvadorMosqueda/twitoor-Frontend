@@ -5,7 +5,6 @@ import EditUserForm from '../../User/EditUserForm'
 import AvatarNotFound from '../../../assets/png/avatar-no-found.png'
 import { API_HOST } from '../../../utils/constants'
 import { checkFollowApi, followUserApi, unfollowUserApi } from '../../../api/follow'
-
 import "./BannerAvatar.scss"
 
 export default function BannerAvatar(props) {
@@ -30,7 +29,7 @@ export default function BannerAvatar(props) {
         }
         setRealodFollow(false);
     }, [user, realodFollow]);
-
+    console.log()
     const onFollow = () => {
         followUserApi(user.id).then(() => {
             setRealodFollow(true);
